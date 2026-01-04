@@ -5,7 +5,7 @@ services:
     runtime: node
     region: frankfurt
     plan: free
-    buildCommand: npm install && cd client && npm install && npm run build && cd ..
+    buildCommand: npm install && cd client && npm install && npm run build && cd .. && npm run db:setup
     startCommand: npm start
     envVars:
       - key: NODE_ENV
@@ -13,7 +13,7 @@ services:
       - key: PORT
         value: 10000
       - key: DATABASE_URL
-        sync: false
+        value: ./data/inspections.db
     disk:
       name: inspection-data
       mountPath: /opt/render/project/src/data
