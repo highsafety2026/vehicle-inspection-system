@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production builds
+dist/
+dist-admin/
+build/
+server/public/
+
+# Database files
+*.db
+*.db-journal
+data/
+
+# User uploads
+uploads/
+!uploads/.gitkeep
+
+# Environment variables
+.env
+.env.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Vite cache
+.vite/
+client/node_modules/.vite/
+
+# TypeScript
+*.tsbuildinfo
+
+# Archives
+*.tar.gz
+vite.config.ts.*

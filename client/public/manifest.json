@@ -1,0 +1,48 @@
+{
+  "name": "هاي سيفيتي - High Safety",
+  "short_name": "هاي سيفيتي",
+  "description": "نظام فحص المركبات - High Safety Inspection System",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "/assets/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/logo.png",
+      "sizes": "540x720",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "shortcuts": [
+    {
+      "name": "فحص جديد",
+      "short_name": "جديد",
+      "description": "إنشاء فحص جديد",
+      "url": "/inspections/new",
+      "icons": [
+        {
+          "src": "/assets/logo.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

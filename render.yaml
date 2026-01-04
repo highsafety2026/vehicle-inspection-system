@@ -1,0 +1,20 @@
+services:
+  # Web Service - Frontend + Backend
+  - type: web
+    name: high-safety-inspection
+    runtime: node
+    region: frankfurt
+    plan: free
+    buildCommand: npm install && cd client && npm install && npm run build && cd ..
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        sync: false
+    disk:
+      name: inspection-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
