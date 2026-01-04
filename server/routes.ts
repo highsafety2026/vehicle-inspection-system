@@ -8,35 +8,25 @@ import path from "path";
 import fs from "fs";
 import express from "express";
 import nodemailer from "nodemailer";
+import { cloudinary } from "./cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 
-// Configure upload storage - use persistent disk in production
-const uploadDir = process.env.NODE_ENV === 'production'
-  ? '/opt/render/project/src/data/uploads'
-  : path.join(process.cwd(), "uploads");
-
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-  console.log('📁 Created uploads directory:', uploadDir);
-}
-
-const storageConfig = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
+// Configure Cloudinary storage for photo uploads
+const cloudinaryStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'vehicle-inspections',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+    transformation: [{ width: 1200, quality: 'auto' }]
+  } as any
 });
 
-const upload = multer({ storage: storageConfig });
+const upload = multer({ storage: cloudinaryStorage });
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // Serve uploaded files statically
-  app.use("/uploads", express.static(uploadDir));
 
   // Inspections
   app.get(api.inspections.list.path, async (req, res) => {
@@ -115,12 +105,13 @@ export async function registerRoutes(
       return res.status(400).json({ message: "No file uploaded" });
     }
 
+    // Cloudinary URL is available in req.file.path
     const photo = await storage.createInspectionPhoto({
       itemId: Number(req.params.itemId),
-      imageUrl: `/uploads/${req.file.filename}`
+      imageUrl: (req.file as any).path // Cloudinary URL
     });
 
-    console.log("✅ Photo saved:", photo);
+    console.log("✅ Photo saved to Cloudinary:", photo);
     res.status(201).json(photo);
   });
 

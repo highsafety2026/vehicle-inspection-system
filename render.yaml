@@ -14,6 +14,12 @@ services:
         value: 10000
       - key: DATABASE_URL
         value: /opt/render/project/src/data/inspections.db
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
     disk:
       name: inspection-data
       mountPath: /opt/render/project/src/data

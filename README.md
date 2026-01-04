@@ -8,10 +8,14 @@
 # 1. تثبيت المكتبات
 npm install
 
-# 2. إنشاء قاعدة البيانات
+# 2. إعداد متغيرات البيئة
+cp .env.example .env
+# أضف بيانات Cloudinary في ملف .env
+
+# 3. إنشاء قاعدة البيانات
 npm run db:push
 
-# 3. تشغيل المشروع
+# 4. تشغيل المشروع
 npm run dev
 ```
 
@@ -50,6 +54,7 @@ npm run dev
 - **Frontend:** React + TypeScript + Vite
 - **Backend:** Express.js
 - **Database:** SQLite + Drizzle ORM
+- **Storage:** Cloudinary (للصور)
 - **UI:** Radix UI + Tailwind CSS
 - **State:** TanStack Query
 
@@ -131,9 +136,18 @@ npm run db:push  # تحديث قاعدة البيانات
 ## 📝 ملاحظات
 
 - المنفذ الافتراضي: **3000**
-- الصور تحفظ في: `uploads/`
-- قاعدة البيانات: `data/database.db`
+- الصور تحفظ على: **Cloudinary** (سحابة آمنة)
+- قاعدة البيانات: `data/inspections.db`
 - واجهة عربية بالكامل (RTL)
+
+### 🔧 إعداد Cloudinary
+
+1. سجل حساب مجاني على [Cloudinary](https://cloudinary.com/)
+2. احصل على بياناتك من Dashboard:
+   - `CLOUDINARY_CLOUD_NAME`
+   - `CLOUDINARY_API_KEY`
+   - `CLOUDINARY_API_SECRET`
+3. أضفها في ملف `.env` (انسخ من `.env.example`)
 
 ---
 
