@@ -9,10 +9,14 @@ import fs from "fs";
 import express from "express";
 import nodemailer from "nodemailer";
 
-// Configure upload storage
-const uploadDir = path.join(process.cwd(), "uploads");
+// Configure upload storage - use persistent disk in production
+const uploadDir = process.env.NODE_ENV === 'production'
+  ? '/opt/render/project/src/data/uploads'
+  : path.join(process.cwd(), "uploads");
+
 if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
+  fs.mkdirSync(uploadDir, { recursive: true });
+  console.log('📁 Created uploads directory:', uploadDir);
 }
 
 const storageConfig = multer.diskStorage({
