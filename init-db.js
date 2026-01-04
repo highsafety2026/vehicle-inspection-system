@@ -6,15 +6,20 @@ import { mkdirSync, existsSync } from 'fs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Create data directory
-const dataDir = join(__dirname, 'data');
+// Use absolute path for data directory
+const dataDir = process.env.NODE_ENV === 'production' 
+  ? '/opt/render/project/src/data'
+  : join(__dirname, 'data');
+
 if (!existsSync(dataDir)) {
   mkdirSync(dataDir, { recursive: true });
-  console.log('✅ Created data directory');
+  console.log('✅ Created data directory:', dataDir);
 }
 
 // Create database
 const dbPath = join(dataDir, 'inspections.db');
+console.log('📦 Database path:', dbPath);
+
 const db = new Database(dbPath);
 
 console.log('📦 Creating database tables...');
@@ -58,5 +63,5 @@ db.exec(`
   );
 `);
 
-console.log('✅ Database initialized successfully!');
+console.log('✅ Database initialized successfully at:', dbPath);
 db.close();
