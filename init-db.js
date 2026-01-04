@@ -28,40 +28,42 @@ console.log('📦 Creating database tables...');
 db.exec(`
   CREATE TABLE IF NOT EXISTS inspections (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    clientName TEXT NOT NULL,
-    clientPhone TEXT NOT NULL,
-    clientEmail TEXT NOT NULL,
-    vehicleInfo TEXT NOT NULL,
-    vinNumber TEXT,
-    color TEXT NOT NULL,
-    mileage TEXT NOT NULL,
-    engineNumber TEXT,
-    clientSignature TEXT,
+    client_name TEXT NOT NULL,
+    client_phone TEXT,
+    client_email TEXT,
+    vehicle_info TEXT NOT NULL,
+    vin_number TEXT,
+    color TEXT,
+    mileage TEXT,
+    engine_number TEXT,
+    client_signature TEXT,
     status TEXT NOT NULL DEFAULT 'in_progress',
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at INTEGER
   );
 
   CREATE TABLE IF NOT EXISTS inspection_items (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    inspectionId INTEGER NOT NULL,
-    partName TEXT NOT NULL,
-    defectType TEXT NOT NULL,
+    inspection_id INTEGER NOT NULL,
+    part_name TEXT NOT NULL,
+    defect_type TEXT NOT NULL,
     severity TEXT NOT NULL,
     notes TEXT,
-    positionX INTEGER,
-    positionY INTEGER,
-    vehicleArea TEXT,
-    FOREIGN KEY (inspectionId) REFERENCES inspections(id) ON DELETE CASCADE
+    position_x INTEGER,
+    position_y INTEGER,
+    vehicle_area TEXT,
+    FOREIGN KEY (inspection_id) REFERENCES inspections(id) ON DELETE CASCADE
   );
 
   CREATE TABLE IF NOT EXISTS inspection_photos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    itemId INTEGER NOT NULL,
-    photoPath TEXT NOT NULL,
-    uploadedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (itemId) REFERENCES inspection_items(id) ON DELETE CASCADE
+    item_id INTEGER NOT NULL,
+    image_url TEXT NOT NULL,
+    FOREIGN KEY (item_id) REFERENCES inspection_items(id) ON DELETE CASCADE
   );
 `);
 
+db.close();
+
+console.log('✅ Database initialized successfully at:', dbPath);
 console.log('✅ Database initialized successfully at:', dbPath);
 db.close();

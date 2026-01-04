@@ -98,7 +98,7 @@ export async function registerRoutes(
   // Photos
   app.post(api.photos.upload.path, upload.single("photo"), async (req, res) => {
     console.log("📸 Photo upload request received for itemId:", req.params.itemId);
-    console.log("📁 File received:", req.file ? req.file.filename : "NO FILE");
+    console.log("📁 File received:", req.file);
     
     if (!req.file) {
       console.error("❌ No file in request!");
@@ -106,12 +106,15 @@ export async function registerRoutes(
     }
 
     // Cloudinary URL is available in req.file.path
+    const cloudinaryUrl = (req.file as any).path;
+    console.log("☁️ Cloudinary URL:", cloudinaryUrl);
+    
     const photo = await storage.createInspectionPhoto({
       itemId: Number(req.params.itemId),
-      imageUrl: (req.file as any).path // Cloudinary URL
+      imageUrl: cloudinaryUrl
     });
 
-    console.log("✅ Photo saved to Cloudinary:", photo);
+    console.log("✅ Photo saved to database:", photo);
     res.status(201).json(photo);
   });
 

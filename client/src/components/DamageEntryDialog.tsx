@@ -492,10 +492,28 @@ export function DamageEntryDialog({
         <div className="flex gap-3 mt-6">
           <Button
             onClick={handleSubmit}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-lg py-6"
+            className="flex-1 bg-blue-600 hover:bg-blue-700 text-lg py-6 relative"
             disabled={!partName || defectTypes.length === 0}
           >
-            ✅ حفظ العطل
+            <span className="flex items-center gap-2">
+              ✅ حفظ العطل
+              {(() => {
+                const totalPhotos = Object.values(defectPhotos).reduce((sum, arr) => sum + arr.length, 0);
+                if (totalPhotos > 0) {
+                  return (
+                    <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-bold">
+                      📸 {totalPhotos}
+                    </span>
+                  );
+                } else {
+                  return (
+                    <span className="bg-yellow-500 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse">
+                      ⚠️ بدون صور
+                    </span>
+                  );
+                }
+              })()}
+            </span>
           </Button>
           <Button
             onClick={onClose}

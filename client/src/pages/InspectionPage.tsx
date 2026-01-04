@@ -130,8 +130,22 @@ export function InspectionPage() {
 
   const handleDamageSubmit = (data: DamageData) => {
     console.log('🎯🎯🎯 handleDamageSubmit CALLED!');
-    console.log('🚀 SUBMIT! Photos:', data.defectPhotos);
-    console.log('🚀 Data:', data);
+    console.log('🚀 Data received:', {
+      defectTypes: data.defectTypes,
+      photos: data.photos?.length || 0,
+      defectPhotos: data.defectPhotos,
+      defectPhotosKeys: Object.keys(data.defectPhotos || {}),
+      totalPhotos: Object.values(data.defectPhotos || {}).reduce((sum, arr) => sum + arr.length, 0)
+    });
+    
+    // Validate that we have photos if user selected any
+    const hasPhotos = data.photos && data.photos.length > 0;
+    if (hasPhotos) {
+      console.log('✅ Has photos:', data.photos.length);
+    } else {
+      console.log('⚠️ No photos attached');
+    }
+    
     addDamageMutation.mutate(data);
   };
 
